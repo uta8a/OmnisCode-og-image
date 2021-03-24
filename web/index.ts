@@ -67,7 +67,7 @@ const TextInput = ({ value, oninput }: TextInputProps) => {
         { className: 'input-outer-wrapper' },
         H('div',
             { className: 'input-inner-wrapper' },
-            H('input',
+            H('textarea',
                 { type: 'text', value, oninput: (e: any) => oninput(e.target.value) }
             )
         )
