@@ -16,17 +16,12 @@ const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('b
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
 const scp = readFileSync(`${__dirname}/../_fonts/SourceCodePro-Regular.woff2`).toString('base64');
 
-function getCss(theme: string, fontSize: string) {
-    let background = 'white';
-    let foreground = 'black';
-    let radial = 'lightgray';
+function getCss() {
 
-    if (theme === 'dark') {
-        background = 'black';
-        foreground = 'white';
-        radial = 'dimgray';
-    }
     return `
+    * {
+        margin: 0;
+    }
     @font-face {
         font-family: 'Inter';
         font-style:  normal;
@@ -55,13 +50,11 @@ function getCss(theme: string, fontSize: string) {
     }
 
     body {
-        background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
+        background: white;
         height: 100vh;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        /* align-items: center;
+        justify-content: center; */
     }
 
     .logo-wrapper {
@@ -71,36 +64,30 @@ function getCss(theme: string, fontSize: string) {
         justify-content: center;
         justify-items: center;
     }
+
+
     .main-code {
         font-family: 'SourceCodePro', sans-serif;
+        width: 100vw;
+        height: 100vh;
     }
-    .logo {
-        margin: 0 75px;
+    .language {
+        font-family: 'Inter';
+        font-style:  normal;
+        font-weight: bold;
+        font-size: 160px;
+        background: #ffffcc;
+        position: absolute;
+        right: 0;
+        line-height: 1.2;
+        padding: 5px 100px 10px 100px;
     }
-
-    .plus {
-        color: #BBB;
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
-    }
-
-    .spacer {
-        margin: 150px;
-    }
-
-    .emoji {
-        height: 1em;
-        width: 1em;
-        margin: 0 .05em 0 .1em;
-        vertical-align: -0.1em;
-    }
-    
     .heading {
         font-family: 'SourceCodePro', sans-serif;
-        font-size: 80px /*${sanitizeHtml(fontSize)}*/;
+        font-size: 80px;
         font-style: normal;
-        color: ${foreground};
         line-height: 1.2;
+        width: 100%;
     }`;
 }
 // const Component = (text, style) => {
@@ -112,28 +99,25 @@ function getCss(theme: string, fontSize: string) {
 //   };
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, fontSize } = parsedReq;
+    const { code, theme, lang } = parsedReq;
+    const innerText = sanitizeHtml(code);
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/solarized-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/${theme}.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 
     <style>
-        ${getCss(theme, fontSize)}
+        ${getCss()}
     </style>
     <body>
-        <div>
-            <div class="heading">
-                <pre><code class="main-code go">${text}</code></pre>
-            </div>
+        <div class="heading">
+            <pre><code class="main-code ${lang}">${innerText}</code></pre>
         </div>
-        <script>
-            
-        </script>
+        <div class="language">${lang}</div>
     </body>
 </html>`;
 }
