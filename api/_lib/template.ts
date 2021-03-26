@@ -3,7 +3,89 @@ import { readFileSync } from 'fs';
 // import marked from 'marked';
 import { sanitizeHtml } from './sanitizer';
 import { ParsedRequest } from './types';
-
+const op: {[key: string]: string} = {'awk': 'Awk',
+'bash': 'Bash',
+'basic': 'Basic',
+'bnf': 'BNF',
+'brainfuck': 'Brainfuck',
+'csharp': 'C#',
+'c': 'C',
+'cpp': 'C++',
+'cmake': 'CMake',
+'coq': 'Coq',
+'css': 'CSS',
+'clojure': 'Clojure',
+'coffeescript': 'CoffeeScript',
+'crystal': 'Crystal',
+'d': 'D',
+'dart': 'Dart',
+'delphi': 'Delphi',
+'dockerfile': 'Dockerfile',
+'elixir': 'Elixir',
+'elm': 'Elm',
+'erlang': 'Erlang',
+'excel': 'Excel',
+'fsharp': 'F#',
+'fortran': 'Fortran',
+'go': 'Go',
+'gradle': 'Gradle',
+'groovy': 'Groovy',
+'xml': 'HTML, XML',
+'http': 'HTTP',
+'haskell': 'Haskell',
+'haxe': 'Haxe',
+'ini': 'Ini, TOML',
+'json': 'JSON',
+'java': 'Java',
+'javascript': 'JavaScript',
+'julia': 'Julia',
+'kotlin': 'Kotlin',
+'tex': 'LaTeX',
+'lisp': 'Lisp',
+'lua': 'Lua',
+'makefile': 'Makefile',
+'markdown': 'Markdown',
+'mathematica': 'Mathematica',
+'matlab': 'Matlab',
+'maxima': 'Maxima',
+'nginx': 'Nginx',
+'nim': 'Nim',
+'nix': 'Nix',
+'ocaml': 'OCaml',
+'objectivec': 'Objective C',
+'glsl': 'OpenGL Shading Language',
+'openscad': 'OpenSCAD',
+'php': 'PHP',
+'perl': 'Perl',
+'plaintext': 'Plaintext',
+'pgsql': 'PostgreSQL & PL/pgSQL',
+'powershell': 'PowerShell',
+'processing': 'Processing',
+'prolog': 'Prolog',
+'protobuf': 'Protocol Buffers',
+'python': 'Python',
+'r': 'R',
+'reasonml': 'ReasonML',
+'ruby': 'Ruby',
+'rust': 'Rust',
+'scss': 'SCSS',
+'sql': 'SQL',
+'scala': 'Scala',
+'scheme': 'Scheme',
+'shell': 'Shell',
+'smalltalk': 'Smalltalk',
+'sml': 'SML',
+'solidity': 'Solidity',
+'svelte': 'Svelte',
+'swift': 'Swift',
+'terraform': 'Terraform (HCL)',
+'typescript': 'TypeScript',
+'vba': 'VBA',
+'vhdl': 'VHDL',
+'verilog': 'Verilog',
+'vim': 'Vim Script',
+'x86asm': 'x86 Assembly',
+'yml': 'YAML'}
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 // import { githubGist } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 // import React from 'react';
@@ -63,12 +145,14 @@ function getCss() {
         align-content: center;
         justify-content: center;
         justify-items: center;
+        margin-top: 10px;
     }
 
 
     .main-code {
         font-family: 'SourceCodePro', sans-serif;
         width: 100vw;
+        padding: 70px;
         height: 100vh;
     }
     .language {
@@ -117,7 +201,7 @@ export function getHtml(parsedReq: ParsedRequest) {
         <div class="heading">
             <pre><code class="main-code ${lang}">${innerText}</code></pre>
         </div>
-        <div class="language">${lang}</div>
+        <div class="language">${op[lang]}</div>
     </body>
 </html>`;
 }

@@ -75,3 +75,6 @@ Once you have an image generator that sparks joy, you can setup [automatic GitHu
 ## note
 - たて10文字、横40文字くらいがよさそう。
 - parameterはcode, lang, styleのみで頭から表示する。wrapはなし
+
+# fix
+- コード表示がFile tyになっているので直す
